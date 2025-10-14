@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.logiflow.*" %>    
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,10 +11,22 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Style.css">
 </head>
 <body>
+<%
+Usuario user = (Usuario) session.getAttribute("usuario");
+String rolUsur = (String) session.getAttribute("rolUsuario");
+
+System.out.println("[DASHBOARD] Usuario en sesión: " + (user != null ? user.getUsername() : "Ninguno"));
+System.out.println("[DASHBOARD] RolUsuario: " + rolUsur);
+%>
    <%@ include file= "includes/Header.jsp" %>
+   <%
+if (usuario != null) {
+%>
     <div class="container">
+    <% System.out.println("[JSP] Iniciando container"); %>
        <%@ include file="includes/Sidebar.jsp" %>
         <main class="main-content">
+        <% System.out.println("[JSP] Iniciando main-content"); %>
             <!-- Dashboard Section -->
             <section id="dashboard" class="form-section active">
                 <div class="page-header">
@@ -91,6 +104,12 @@
                 </div>
             </section>
         </main>
+    
     </div>
+    <%
+} else {
+    System.out.println("[DASHBOARD] No se renderiza main-content: usuario null");
+}
+%>
 </body>
 </html>

@@ -1,0 +1,130 @@
+{
+  "menu": [
+    {
+      "heading": "Dashboard",
+      "icon": "fas fa-tachometer-alt",
+      "url": "/Dashboard.jsp",
+      "roles": ["ADMIN", "SUPERVISOR", "OPERATOR", "VENDEDOR", "USUARIO"]
+    },
+    {
+      "heading": "Catálogo",
+      "subMenu": [
+        {
+          "title": "Productos",
+          "icon": "fas fa-box",
+          "url": "/Productos.jsp",
+          "roles": ["ADMIN", "SUPERVISOR", "OPERATOR", "VENDEDOR"]
+        },
+        {
+          "title": "Categorías",
+          "icon": "fas fa-tags",
+          "url": "/categorias",
+          "roles": ["ADMIN", "SUPERVISOR", "OPERATOR"]
+        }
+      ]
+    },
+    {
+      "heading": "Operaciones",
+      "subMenu": [
+        {
+          "title": "Proveedores",
+          "icon": "fas fa-truck-loading",
+          "url": "/Proveedores.jsp",
+          "roles": ["ADMIN", "SUPERVISOR", "OPERATOR"]
+        },
+        {
+          "title": "Clientes",
+          "icon": "fas fa-users",
+          "url": "/Clientes.jsp",
+          "roles": ["ADMIN", "SUPERVISOR", "OPERATOR", "VENDEDOR", "USUARIO"]
+        },
+        {
+          "title": "Pedidos",
+          "icon": "fas fa-shopping-cart",
+          "url": "/Pedidos.jsp",
+          "roles": ["ADMIN", "SUPERVISOR", "OPERATOR", "VENDEDOR", "USUARIO"]
+        }
+      ]
+    },
+    {
+      "heading": "Inventario y Transporte",
+      "subMenu": [
+        {
+          "title": "Inventario",
+          "icon": "fas fa-warehouse",
+          "url": "/Inventario.jsp",
+          "roles": ["ADMIN", "SUPERVISOR", "OPERATOR"]
+        },
+        {
+          "title": "Transporte",
+          "icon": "fas fa-building",
+          "url": "/Transportes.jsp",
+          "roles": ["ADMIN", "SUPERVISOR", "OPERATOR"]
+        }
+      ]
+    },
+    {
+      "heading": "Reportes",
+      "subMenu": [
+        {
+          "title": "Reportes Generales",
+          "icon": "fas fa-chart-bar",
+          "url": "/Reportes.jsp",
+          "roles": ["ADMIN", "SUPERVISOR"]
+        }
+      ]
+    },
+    {
+      "heading": "Administración",
+      "subMenu": [
+        {
+          "title": "Gestión de Usuarios",
+          "icon": "fas fa-user-cog",
+          "url": "/rol.jsp",
+          "roles": ["ADMIN"]
+        },
+        {
+          "title": "Configuración del Sistema",
+          "icon": "fas fa-user-shield",
+          "url": "/configuracion.jsp",
+          "roles": ["ADMIN"]
+        },
+        {
+          "title": "Auditoría de Usuarios",
+          "icon": "fas fa-search",
+          "url": "/auditoria.jsp",
+          "roles": ["ADMIN"]
+        },
+        {
+          "title": "Logs del Sistema",
+          "icon": "fas fa-file-alt",
+          "url": "/logs.jsp",
+          "roles": ["ADMIN"]
+        },
+        {
+          "title": "Backup y Restauración",
+          "icon": "fas fa-database",
+          "url": "/backup.jsp",
+          "roles": ["ADMIN"]
+        }
+      ]
+    },
+    {
+      "heading": "Personal",
+      "subMenu": [
+        {
+          "title": "Mi Perfil",
+          "icon": "fas fa-question-circle",
+          "url": "/Perfil.jsp",
+          "roles": ["ADMIN", "SUPERVISOR", "OPERATOR", "VENDEDOR", "USUARIO"]
+        },
+        {
+          "title": "Cambiar Contraseña",
+          "icon": "fas fa-key",
+          "url": "/cambiar-password.jsp",
+          "roles": ["ADMIN", "SUPERVISOR", "OPERATOR", "VENDEDOR", "U"]
+        }
+      ]
+    }
+  ]
+}

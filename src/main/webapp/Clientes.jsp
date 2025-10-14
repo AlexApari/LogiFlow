@@ -13,6 +13,7 @@
     <div class="container">
        <%@ include file="includes/Sidebar.jsp" %>
         <main class="main-content">
+        <p>TEST: este contenido siempre debe mostrarse</p>
             <!-- Clientes Section -->
             <section id="clientes" class="form-section active">
                 <div class="page-header">
