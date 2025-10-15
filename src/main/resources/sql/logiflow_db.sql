@@ -137,7 +137,7 @@ CREATE TABLE productos (
     precio DECIMAL(10,2) NOT NULL,
     precio_compra DECIMAL(10,2),
     margen_ganancia DECIMAL(5,2),
-    unidad_medida VARCHAR(10) NOT NULL,
+    unidad_medida VARCHAR(10) NOT NULL default 'UNIDAD',
     stock_inicial INT DEFAULT 0,
     stock_actual INT DEFAULT 0,
     stock_minimo INT DEFAULT 0,
@@ -394,3 +394,80 @@ CREATE TABLE envios (
     INDEX idx_estado (estado),
     INDEX idx_fecha_envio (fecha_envio)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 1. Insertar el rol ADMIN si no existe
+INSERT INTO Roles (nombre, descripcion, activo, fecha_creacion)
+SELECT 'ADMIN', 'Administrador del sistema', 1, NOW()
+WHERE NOT EXISTS (SELECT 1 FROM roles WHERE nombre = 'ADMIN');
+
+-- 2. Insertar el usuario administrador
+INSERT INTO usuarios (username, password, email, nombre, apellido, telefono, direccion, activo, bloqueado, fecha_creacion)
+VALUES (
+  'admin',
+  -- Cambia 'admin123' por una contraseña segura y hasheada si usas hash
+  '$2a$10$fWfXJUNQtCFl3eJAptTkUOl0g.j17CryeOVHVI1lGpXDV4WMyFIzW',
+  'admin@logiflow.com',
+  'Administrador',
+  'Principal',
+  '999999999',
+  'Oficina Central',
+  1,
+  0,
+  NOW()
+);
+
+-- 3. Relacionar el usuario con el rol ADMIN
+INSERT INTO usuario_roles (usuario_id, rol_id)
+SELECT u.id, r.id
+FROM usuarios u, roles r
+WHERE u.username = 'admin' AND r.nombre = 'ADMIN'
+  AND NOT EXISTS (
+    SELECT 1 FROM usuario_roles ur
+    WHERE ur.usuario_id = u.id AND ur.rol_id = r.id
+  );
+
+-- 4. Agregar otros roles
+INSERT INTO roles (nombre, descripcion, activo, fecha_creacion) VALUES
+('OPERATOR', 'Operador con permisos de gestión operativa', TRUE, NOW()),
+('USER', 'Usuario cliente con permisos básicos', TRUE, NOW()),
+('SUPERVISOR', 'Supervisor con permisos de supervisión', TRUE, NOW()),
+('VENDEDOR', 'Vendedor con permisos de ventas', TRUE, NOW());
+
+-- =====================================================
+-- INSERTAR USUARIOS CON CONTRASEÑAS BCRYPT
+-- =====================================================
+
+-- USUARIO: operador | CONTRASEÑA: operador123
+INSERT INTO usuarios (username, password, email, nombre, apellido, telefono, activo, fecha_creacion) VALUES
+('operador', '$2a$10$3yg4SHbym4ikvSkbUei3X.AnWQFD9E31CrBjVJxoIiLvWiVyByWbK', 'operador@logiflow.com', 'María Elena', 'García López', '987654321', TRUE, NOW());
+
+-- USUARIO: usuario | CONTRASEÑA: usuario123
+INSERT INTO usuarios (username, password, email, nombre, apellido, telefono, activo, fecha_creacion) VALUES
+('usuario', '$2a$10$b3VQfCNwfxJUr9lZ3iDImOdAkVeeWkprQ73SXAikSPB/5s60c7R0i', 'usuario@logiflow.com', 'Juan Carlos', 'Pérez Rodríguez', '965432100', TRUE, NOW());
+
+-- USUARIO: supervisor | CONTRASEÑA: supervisor123
+INSERT INTO usuarios (username, password, email, nombre, apellido, telefono, activo, fecha_creacion) VALUES
+('supervisor', '$2a$10$mN2LvwXRwm6VuETk4AuPH.qYekkg3Smbp3rWhjJ5vXbvKaMqLKVoW', 'supervisor@logiflow.com', 'Roberto', 'Martínez Silva', '954321098', TRUE, NOW());
+
+-- USUARIO: vendedor1 | CONTRASEÑA: vendedor123
+INSERT INTO usuarios (username, password, email, nombre, apellido, telefono, activo, fecha_creacion) VALUES
+('vendedor1', '$2a$10$10BJq8nDmcNuHm/aN.r.weo0np2MDN/4io7PgTPHl/H7NE1IHFeCK', 'vendedor1@logiflow.com', 'Ana María', 'Fernández Torres', '943210987', TRUE, NOW());
+
+-- =====================================================
+-- ASIGNAR ROLES A USUARIOS
+-- =====================================================
+INSERT INTO usuario_roles (usuario_id, rol_id, asignado_por, fecha_asignacion) VALUES
+(2, 2, 1, NOW()), -- operador tiene rol OPERATOR
+(3, 3, 1, NOW()), -- usuario tiene rol USER
+(4, 4, 1, NOW()), -- supervisor tiene rol SUPERVISOR
+(5, 5, 1, NOW()); -- vendedor1 tiene rol VENDEDOR
+
+-- Insertar categorías iniciales
+INSERT INTO categorias (nombre, descripcion, activa, orden, fecha_creacion, fecha_modificacion)
+VALUES 
+('Electrónica', 'Productos electrónicos como celulares, computadoras, televisores.', 1, 1, NOW(), NOW()),
+('Ropa', 'Ropa para hombres, mujeres y niños.', 1, 2, NOW(), NOW()),
+('Hogar', 'Artículos para el hogar, muebles y decoración.', 1, 3, NOW(), NOW()),
+('Deportes', 'Equipamiento y ropa deportiva.', 1, 4, NOW(), NOW()),
+('Alimentos', 'Productos alimenticios no perecibles.', 1, 5, NOW(), NOW());
+
